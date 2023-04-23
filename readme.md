@@ -43,9 +43,13 @@ The server will start on port 6543.
 <h2>Usage:</h2>
 
 >Open a web browser and navigate to http://localhost:6543/.
+
 >Click the "Choose File" button and select a CSV file to upload.
+
 >Click the "Upload" button to upload the file.
+
 >If the file follows Benford's Law, the application displays a table and a graph showing the distribution of the first digits in the dataset.
+
 >If the file does not follow Benford's Law, the application displays a message indicating that the dataset does not follow Benford's Law.
 
 >curl -X POST -F "csvfile=@benford_satisfy.csv" http://localhost:6543/json
@@ -63,3 +67,11 @@ This web application provides a simple and user-friendly way to determine whethe
 
 <h2>BY: Amit Duwal</h2>
 
+<h2>Demonstration</h2>
+json endpoint
+
+![json endpoint](endpoint.mp4)
+
+webapp
+
+![json endpoint](benfordlaw.mp4)
