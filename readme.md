@@ -70,8 +70,20 @@ This web application provides a simple and user-friendly way to determine whethe
 <h2>Demonstration</h2>
 json endpoint
 
-![json endpoint](endpoint.mp4)
+
+
+
+https://user-images.githubusercontent.com/43780571/233840203-c5f876f0-570a-4b0a-b195-b91066991ee5.mp4
+
+
+
+
+
 
 webapp
 
-![json endpoint](benfordlaw.mp4)
+
+
+https://user-images.githubusercontent.com/43780571/233840216-b303bbf9-ab9f-4cf4-bbc5-b184d2462c59.mp4
+
+
