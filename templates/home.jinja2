@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Benford Law</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="static/styles.css"/>
+</head>
+<body>
+  <h1>Benford Law</h1>
+
+    <div class="results" >
+    <form method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+      <label for="csvfile">Upload CSV file:</label>
+      <input type="file" name="csvfile" id="csvfile">
+      <input type="submit" value="Upload">
+      <p id="error-msg" style="color: red;"></p>
+    </form>
+  
+    {% if benford_result %}
+      
+      <h2>Results:</h2>
+      {% if benford_result['p'] < 0.05 %}
+        <p>The data does not follow Benford's law at a 0.95 confidence level.</p>
+      {% else %}
+        <p>The data follows Benford's law at a 0.95 confidence level.</p>
+      {% endif %}
+      
+      <table>
+        <tr>
+          <th>Digit</th>
+          <th>Observed Frequency</th>
+          <th>Expected Frequency</th>
+        </tr>
+        {% for i in range(1, 10) %}
+          <tr>
+            <td>{{ i }}</td>
+            <td>{{ benford_result['digit_counts'][i] }}</td>
+            <td>{{ benford_result['benford_freq'][i]|round(2)}}</td>
+          </tr>
+        {% endfor %}
+      </table>
+      <div id="plot"></div>
+      <script>
+          var observed = {{ benford_result['digit_counts'][1:] }};
+          var expected = {{ benford_result['benford_freq'][1:] }};
+          
+          var trace1 = {
+            x: [1,2,3,4,5,6,7,8,9],
+            y: observed,
+            type: 'bar',
+            name: 'Observed'
+          };
+
+          var trace2 = {
+            x: [1,2,3,4,5,6,7,8,9],
+            y: expected,
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Expected'
+          };
+
+          var data = [trace1, trace2];
+
+          var layout = {
+            title: 'Benford Law Distribution',
+            xaxis: {title: 'Digit'},
+            yaxis: {title: 'Frequency'},
+          };
+
+          Plotly.newPlot('plot', data, layout);
+      </script>
+    {% endif %}
+    </div>
+  <script>
+    function validateForm() {
+      var fileInput = document.getElementById('csvfile');
+      var errorMessage = document.getElementById('error-msg');
+      var allowedExtensions = /(\.csv)$/i;
+
+      // Check if a file is selected
+      if (!fileInput.value) {
+        errorMessage.innerText = 'Please select a file to upload.';
+        return false;
+      }
+
+      // Check if the file has the correct extension
+      if (!allowedExtensions.exec(fileInput.value)) {
+        errorMessage.innerText = 'Please upload a CSV file.';
+        return false;
+      }
+
+      // Clear any error messages if the form is valid
+      errorMessage.innerText = '';
+      return true;
+    }
+  </script>
+</body>
+</html>
